@@ -20,7 +20,7 @@ export default function Cart() {
         }
     ).then(({ data: { data: { cart } } }) => {
       dispatch(updateFromApi(cart))
-    });
+    }).catch(console.error);
   }, [dispatch]);
   const cartItems = useSelector(selectCartItems);
   const badgeContent = cartItems.length || undefined;
