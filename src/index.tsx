@@ -13,11 +13,18 @@ axios.interceptors.response.use(
     return response;
   },
   function(error) {
-    if (error?.response?.status === 400) {
-      alert(error.response.data?.data);
+    const { response } = error;
+
+    if (response?.status === 400) {
+      alert(response.data?.data);
     }
 
-    return Promise.reject(error?.response ?? error);
+    if ([401, 403].includes(response?.status)) {
+      alert(`Action is ${response.data.message}`);
+      return Promise.resolve();
+    }
+
+    return Promise.reject(response ?? error);
   }
 );
 
